@@ -1,0 +1,27 @@
+.App {
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.buttons-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 7% 0%;
+}
+
+.buttons-wrapper div{
+    display: flex;
+    margin: 0px 1%;
+    flex-direction: column;
+}
+
+@media only screen and (max-width: 430px) {
+    .buttons-wrapper div{
+        max-width: 40%;
+        margin: 0px 1%;
+        display: flex;
+        flex-direction: column;
+    }
+}
