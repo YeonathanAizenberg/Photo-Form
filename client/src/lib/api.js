@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BaseURL = "http://localhost:5500"
+const BaseURL = "http://localhost:5500/photos"
 
 export async function addNewEvent(eventData) { 
     const {photoName, photographer, exhibition, country, year, style, photo} = eventData
