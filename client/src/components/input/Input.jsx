@@ -1,15 +1,18 @@
 import './Input.css';
 
-function Input({label, name, type, value, onChange}) {
+function Input({register, label, name, type, value, onChange, accept}) {
+
     return (
         <div>
             <label className="input-wrapper">
                 {type === "submit" ? label : label + ":"}
                 <input
+                    ref={register}
                     name={name}
                     type={type}
-                    value={value}
-                    onChange={(e)=> onChange(e.target.value)}
+                    accept={accept}
+                    value={accept ? value?.name : value}
+                    onChange={accept ? (e) => onChange(e.target.files[0]) : (e)=> onChange(e.target.value)}
                     />
             </label>
         </div>
