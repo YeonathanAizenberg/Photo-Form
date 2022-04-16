@@ -1,5 +1,5 @@
-function greyScale(photo, emptyCanvas) { 
-    var image = new Image(photo)
+function greyScale(photo) { 
+    var image = new Image(20,  20)
     try {
         for (var pixel of image.values()) {
                 var red= pixel.getRed();

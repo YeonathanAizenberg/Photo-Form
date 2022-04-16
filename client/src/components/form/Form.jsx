@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { addNewEvent } from '../../lib/api';
+import { addNewEvent, addNewPhotoToEvent } from '../../lib/api';
 import Input from '../input/Input';
 import './Form.css';
 
@@ -12,6 +12,9 @@ function Form() {
     const [year, setYear] = useState("")
     const [style, setStyle] = useState("")
     const [photo, setPhoto] = useState("")
+
+    const canvas = <canvas></canvas>
+    const ctx = canvas.getContext('2d');
 
     const handlePhotoName = (e) => {
         setPhotoName(e)
@@ -48,9 +51,11 @@ function Form() {
         console.log(e)
     }
 
-    const handleNewEvent = (event) => {
+    const onSubmit = (event) => {
         event.preventDefault();
         if (photoName !== "" || photographer !== "" || exhibition !== "" || country !== "" || year !== "" || style !== "" || photo !== "") {
+            const formData = new FormData();
+            formData.append('file', photo);
             const newEventData = {
                 photoName: photoName,
                 photographer: photographer,
@@ -58,19 +63,20 @@ function Form() {
                 country: country,
                 year: year,
                 style: style,
-                photo: photo,
                 emptyCanvas: <canvas></canvas>
             }
             try {
                 addNewEvent(newEventData).then(data => {
-                    setPhotoName("")
-                    setPhotographer("")
-                    setExhibition("")
-                    setCountry("")
-                    setYear("")
-                    setStyle("")
-                    setPhoto("")
-                    alert(data?.exhibition + " was saved!")
+                    addNewPhotoToEvent(formData).then(data => {
+                        setPhotoName("")
+                        setPhotographer("")
+                        setExhibition("")
+                        setCountry("")
+                        setYear("")
+                        setStyle("")
+                        setPhoto("")
+                        alert(data?.exhibition + " was saved!")
+                    })
                 })
             } catch (err) {
                 console.log(err)
@@ -82,13 +88,26 @@ function Form() {
         }
     }
 
+
+    // const onSubmit = (event) => {
+    //     event.preventDefault();
+    //     const formData = new FormData();
+    //     formData.append('file', photo);
+    //     try {
+    //         addNewEvent(formData)
+    //     } catch(err){
+    //         console.log(err)
+    //     }
+    // }
+
+
     return (
         <div className="form-wrapper">
             <h2>
                 Photo-Form
             </h2>
 
-            <form onSubmit={handleNewEvent}>
+            <form onSubmit={onSubmit}>
                 <Input
                     label="Photo Name"
                     name="Photo Name"
