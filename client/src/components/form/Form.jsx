@@ -58,24 +58,25 @@ function Form() {
                 country: country,
                 year: year,
                 style: style,
-                photo: photo
+                photo: photo,
+                emptyCanvas: <canvas></canvas>
             }
             try {
                 addNewEvent(newEventData).then(data => {
-                setPhotoName("")
-                setPhotographer("")
-                setExhibition("")
-                setCountry("")
-                setYear("")
-                setStyle("")
-                setPhoto("")
-                alert(data?.exhibition + " was saved!")
-            })
+                    setPhotoName("")
+                    setPhotographer("")
+                    setExhibition("")
+                    setCountry("")
+                    setYear("")
+                    setStyle("")
+                    setPhoto("")
+                    alert(data?.exhibition + " was saved!")
+                })
             } catch (err) {
                 console.log(err)
                 alert(err)
             }
-            
+
         } else {
             alert("Please fill in the fields!")
         }
@@ -140,15 +141,16 @@ function Form() {
                     label="Photo"
                     name="Photo"
                     type="file"
-                    value={photo}
+                    accept="image/*"
+                    value={photo?.name}
                     onChange={handlePhoto}
-                />          
+                />
 
                 <Input
                     name="Submit"
                     type="submit"
                     value="submit"
-                />    
+                />
             </form>
         </div>
     );
