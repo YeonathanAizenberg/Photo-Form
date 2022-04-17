@@ -11,17 +11,10 @@
     margin: 7% 0%;
 }
 
-.buttons-wrapper div{
-    display: flex;
-    margin: 0px 1%;
-    flex-direction: column;
-}
-
 @media only screen and (max-width: 430px) {
-    .buttons-wrapper div{
-        max-width: 40%;
-        margin: 0px 1%;
+    .buttons-wrapper {
         display: flex;
-        flex-direction: column;
+        justify-content: space-evenly;
+        margin: 0% 0%;
     }
 }

@@ -16,23 +16,23 @@ function PhotosByExhibition() {
             setLoading(true)
             try {
                 getAllPhotosByExhibition(exhibition).then(data => {
-                setPhotos(data)
-                displayModal(true)
-                setLoading(false)
+                    setPhotos(data)
+                    displayModal(true)
+                    setLoading(false)
                 })
             } catch (err) {
                 console.log(err)
                 alert(err)
                 setLoading(false)
             }
-            
+
         } else {
             alert("Please fill in the fields!")
         }
     }
 
     return (
-        <div>
+        <div className='btn-exhibition-wrapper'>
             <Button onClick={getExhibitionPhotos}>
                 Get Photos By Exhibition
             </Button>
