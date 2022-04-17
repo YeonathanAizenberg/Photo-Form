@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { addNewEvent, addNewPhotoToEvent } from '../../lib/api';
+import CountrySelector from '../countrySelector/CountrySelector';
 import Input from '../input/Input';
 import './Form.css';
 
@@ -13,42 +14,28 @@ function Form() {
     const [style, setStyle] = useState("")
     const [photo, setPhoto] = useState("")
 
-    const canvas = <canvas></canvas>
-    const ctx = canvas.getContext('2d');
-
     const handlePhotoName = (e) => {
         setPhotoName(e)
-        console.log(e)
     }
 
     const handlePhotographer = (e) => {
         setPhotographer(e)
-        console.log(e)
     }
 
     const handleExhibition = (e) => {
         setExhibition(e)
-        console.log(e)
-    }
-
-    const handleCountry = (e) => {
-        setCountry(e)
-        console.log(e)
     }
 
     const handleYear = (e) => {
         setYear(e)
-        console.log(e)
     }
 
     const handleStyle = (e) => {
         setStyle(e)
-        console.log(e)
     }
 
     const handlePhoto = (e) => {
         setPhoto(e)
-        console.log(e)
     }
 
     const onSubmit = (event) => {
@@ -60,14 +47,14 @@ function Form() {
                 photoName: photoName,
                 photographer: photographer,
                 exhibition: exhibition,
-                country: country,
-                year: year,
+                country: country?.label,
+                year: parseInt(year.split("-")[0]),
                 style: style,
-                emptyCanvas: <canvas></canvas>
             }
             try {
                 addNewEvent(newEventData).then(data => {
-                    addNewPhotoToEvent(formData).then(data => {
+                    console.log(data)
+                    addNewPhotoToEvent(formData, data?.data.insertId).then(data => {
                         setPhotoName("")
                         setPhotographer("")
                         setExhibition("")
@@ -75,7 +62,7 @@ function Form() {
                         setYear("")
                         setStyle("")
                         setPhoto("")
-                        alert(data?.exhibition + " was saved!")
+                        alert("Event was saved!")
                     })
                 })
             } catch (err) {
@@ -87,19 +74,6 @@ function Form() {
             alert("Please fill in the fields!")
         }
     }
-
-
-    // const onSubmit = (event) => {
-    //     event.preventDefault();
-    //     const formData = new FormData();
-    //     formData.append('file', photo);
-    //     try {
-    //         addNewEvent(formData)
-    //     } catch(err){
-    //         console.log(err)
-    //     }
-    // }
-
 
     return (
         <div className="form-wrapper">
@@ -132,13 +106,14 @@ function Form() {
                     onChange={handleExhibition}
                 />
 
-                <Input
-                    label="Country"
-                    name="Country"
-                    type="input"
-                    value={country}
-                    onChange={handleCountry}
-                />
+                <div className='country-selector'>
+                    Country:
+                    <CountrySelector
+                        country={country}
+                        setCountry={setCountry}
+                    />
+                </div>
+                
 
                 <Input
                     label="Year"

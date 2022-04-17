@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import { getAllPhotosByCountry } from '../../lib/api';
+import CountrySelector from '../countrySelector/CountrySelector';
 import MainModal from '../modal/MainModal';
 import './PhotosByCountry.css';
 
@@ -15,17 +16,17 @@ function PhotosByCountry() {
         if (country !== "") {
             setLoading(true)
             try {
-                getAllPhotosByCountry(country).then(data => {
-                setPhotos(data)
-                displayModal(true)
-                setLoading(false)
+                getAllPhotosByCountry(country?.label).then(data => {
+                    setPhotos(data)
+                    displayModal(true)
+                    setLoading(false)
                 })
             } catch (err) {
                 console.log(err)
                 alert(err)
                 setLoading(false)
             }
-            
+
         } else {
             alert("Please fill in the fields!")
         }
@@ -42,12 +43,14 @@ function PhotosByCountry() {
                 data={photos}
                 title="Photos By Country"
             />
-            <input
-                name="photosByCountry"
-                type="text"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-            />
+
+            <div className='country-meta-data-selector'>
+                <CountrySelector
+                    country={country}
+                    setCountry={setCountry}
+                />
+            </div>
+
             {loading ? <Spinner animation="grow" variant="primary" /> : null}
         </div>
     );

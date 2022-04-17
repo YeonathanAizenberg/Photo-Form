@@ -1,0 +1,5 @@
+.btn-exhibition-wrapper {
+    display: flex;
+    margin: 0px 1%;
+    flex-direction: column;
+}
