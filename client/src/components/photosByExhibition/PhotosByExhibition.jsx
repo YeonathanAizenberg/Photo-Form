@@ -16,9 +16,14 @@ function PhotosByExhibition() {
             setLoading(true)
             try {
                 getAllPhotosByExhibition(exhibition).then(data => {
-                    setPhotos(data)
-                    displayModal(true)
-                    setLoading(false)
+                    if(data.data !== "No data found") {
+                        setPhotos(data)
+                        setDisplayModal(true)
+                        setLoading(false)
+                    } else {
+                        alert(data.data)
+                        setLoading(false)
+                    }
                 })
             } catch (err) {
                 console.log(err)
@@ -37,6 +42,7 @@ function PhotosByExhibition() {
                 Get Photos By Exhibition
             </Button>
             <MainModal
+                metaData={false}
                 show={displayModal}
                 onHide={() => setDisplayModal(false)}
                 data={photos}
@@ -48,7 +54,7 @@ function PhotosByExhibition() {
                 value={exhibition}
                 onChange={(e) => setExhibition(e.target.value)}
             />
-            {loading ? <Spinner animation="grow" variant="primary" /> : null}
+            {loading ? <div className='spinner-wrapper'><Spinner animation="grow" variant="primary" /></div> : null}
         </div>
     );
 }

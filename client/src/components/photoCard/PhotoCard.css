@@ -1,0 +1,9 @@
+.photo-wrapper {
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.photo-wrapper img{
+    width: 100%;
+    height: 100%;
+}

@@ -53,7 +53,6 @@ function Form() {
             }
             try {
                 addNewEvent(newEventData).then(data => {
-                    console.log(data)
                     addNewPhotoToEvent(formData, data?.data.insertId).then(data => {
                         setPhotoName("")
                         setPhotographer("")
