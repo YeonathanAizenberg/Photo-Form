@@ -1,12 +1,14 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import PhotoCard from '../photoCard/PhotoCard';
+import PhotoMetaCard from '../photoMetaCard/PhotoMetaCard';
 import './MainModal.css';
 
-function MainModal({show, onHide, data, title}) {
-
+function MainModal({ show, onHide, data, title, metaData }) {
+    const correctData = data?.data
     return (
         <Modal
-            show={show} 
+            show={show}
             onHide={onHide}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
@@ -18,13 +20,25 @@ function MainModal({show, onHide, data, title}) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className='online-users-list-wrapper'>
-                    {data?.map((person, index) => 
-                        <div key={index}>
-                            {person}
-                        </div>
-                    )}
-                </div>
+                {metaData ?
+                    <div>
+                        {correctData?.map((photo, index) =>
+                            <PhotoMetaCard
+                                key={index}
+                                data={photo}
+                            />
+                        )}
+                    </div>
+                    :
+                    <div>
+                        {correctData?.map((photoMeta, index) =>
+                            <PhotoCard
+                                key={index}
+                                data={photoMeta}
+                            />
+                        )}
+                    </div>
+                }
             </Modal.Body>
             <Modal.Footer className='modal-new-color'>
                 <Button onClick={onHide}>Close</Button>

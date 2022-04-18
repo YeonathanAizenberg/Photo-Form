@@ -29,21 +29,34 @@ router.post('/', (req, res) => {
     })
 })
 
-router.get('/:exhibition', (req, res) => {
+router.get('/exhibition/:exhibition', (req, res) => {
     const { exhibition } = req.params;
-    let sql = `SELECT photo FROM event_table WHERE exhibition= "${exhibition}"`;
+    let sql = `SELECT photo FROM photo_table INNER JOIN event_table ON event_table.photo_id=photo_table.id AND event_table.exhibition="${exhibition}"`;
     connection.query(sql, function (err, results) {
         if (err) throw err;
-        res.send(results)
+        if (results.length !== 0) {
+            res.send(results)
+        } else {
+            res.send("No data found")
+        }
     });
 })
 
-router.get('/:country', (req, res) => {
+router.get('/country/:country', (req, res) => {
     const { country } = req.params;
-    let sql = `SELECT * FROM event_table WHERE country=${exhibition}`;
+    let sql = `SELECT id FROM country_table WHERE country="${country}"`;
     connection.query(sql, function (err, results) {
         if (err) throw err;
-        res.send(results)
+        if (results.length !== 0) {
+            let sqlTwo = `SELECT name, size, encoding, tempFilePath, truncated, mimetype, md5, mv FROM photo_table INNER JOIN event_table ON event_table.photo_id=photo_table.id AND event_table.country_id=${results[0].id}`;
+            connection.query(sqlTwo, function (err, results) {
+                if (err) throw err;
+                res.send(results)
+            });
+        } else {
+            res.send("No data found")
+        }
     });
 })
+
 module.exports = router

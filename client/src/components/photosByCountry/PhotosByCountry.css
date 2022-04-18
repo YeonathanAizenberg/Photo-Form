@@ -3,3 +3,8 @@
         max-height: 5vh;
     }
 }
+
+.spinner-wrapper {
+    justify-content: center;
+    display: flex;
+}

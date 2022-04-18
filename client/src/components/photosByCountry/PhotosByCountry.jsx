@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
-import { getAllPhotosByCountry } from '../../lib/api';
+import { getAllPhotosMetaByCountry } from '../../lib/api';
 import CountrySelector from '../countrySelector/CountrySelector';
 import MainModal from '../modal/MainModal';
 import './PhotosByCountry.css';
@@ -16,10 +16,15 @@ function PhotosByCountry() {
         if (country !== "") {
             setLoading(true)
             try {
-                getAllPhotosByCountry(country?.label).then(data => {
-                    setPhotos(data)
-                    displayModal(true)
-                    setLoading(false)
+                getAllPhotosMetaByCountry(country?.label).then(data => {
+                    if(data.data !== "No data found") {
+                        setPhotos(data)
+                        setDisplayModal(true)
+                        setLoading(false)
+                    } else {
+                        alert(data.data)
+                        setLoading(false)
+                    }
                 })
             } catch (err) {
                 console.log(err)
@@ -38,6 +43,7 @@ function PhotosByCountry() {
                 Get Photos By Country
             </Button>
             <MainModal
+                metaData={true}
                 show={displayModal}
                 onHide={() => setDisplayModal(false)}
                 data={photos}
@@ -51,7 +57,7 @@ function PhotosByCountry() {
                 />
             </div>
 
-            {loading ? <Spinner animation="grow" variant="primary" /> : null}
+            {loading ? <div className='spinner-wrapper'><Spinner animation="grow" variant="primary" /></div> : null}
         </div>
     );
 }
