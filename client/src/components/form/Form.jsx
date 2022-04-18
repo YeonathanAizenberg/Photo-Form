@@ -54,14 +54,14 @@ function Form() {
             try {
                 addNewEvent(newEventData).then(data => {
                     addNewPhotoToEvent(formData, data?.data.insertId).then(data => {
-                        setPhotoName("")
-                        setPhotographer("")
-                        setExhibition("")
-                        setCountry("")
-                        setYear("")
-                        setStyle("")
-                        setPhoto("")
-                        alert("Event was saved!")
+                        // setPhotoName("")
+                        // setPhotographer("")
+                        // setExhibition("")
+                        // setCountry("")
+                        // setYear("")
+                        // setStyle("")
+                        // setPhoto("")
+                        // alert("Event was saved!")
                     })
                 })
             } catch (err) {
@@ -134,7 +134,7 @@ function Form() {
                     label="Photo"
                     name="Photo"
                     type="file"
-                    accept="image/*"
+                    accept=".jpg,.png"
                     value={photo?.name}
                     onChange={handlePhoto}
                 />
