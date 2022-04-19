@@ -12,6 +12,7 @@ function App() {
     <div className="App" style={{backgroundImage: `url(frameImage.jpg)` }}>
       <Form
       setDataLoaded={setDataLoaded}
+      dataLoaded={dataLoaded}
       />
       <div className="buttons-wrapper">
         <PhotosByExhibition
