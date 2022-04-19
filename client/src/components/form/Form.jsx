@@ -120,7 +120,6 @@ function Form({ dataLoaded, setDataLoaded }) {
                     />
                 </div>
 
-
                 <Input
                     label="Year"
                     name="Year"
@@ -147,6 +146,7 @@ function Form({ dataLoaded, setDataLoaded }) {
                 />
 
                 <Input
+                    disabled={dataLoaded}
                     name="Submit"
                     type="submit"
                     value="submit"

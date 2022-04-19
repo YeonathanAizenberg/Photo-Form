@@ -1,12 +1,13 @@
 import './Input.css';
 
-function Input({register, label, name, type, value, onChange, accept}) {
+function Input({register, label, name, type, value, onChange, accept, disabled}) {
 
     return (
         <div>
             <label className="input-wrapper">
                 {type === "submit" ? label : label + ":"}
                 <input
+                    disabled={disabled}
                     ref={register}
                     name={name}
                     type={type}
