@@ -54,22 +54,27 @@ function Form({ dataLoaded, setDataLoaded }) {
             try {
                 setDataLoaded(true)
                 addNewEvent(newEventData).then(data => {
-                    addNewPhotoToEvent(formData, data?.data.insertId).then(photoData => {
-                        if (photoData.status === 200 && data.status === 200) {
-                            setPhotoName("")
-                            setPhotographer("")
-                            setExhibition("")
-                            setCountry("")
-                            setYear("")
-                            setStyle("")
-                            setPhoto("")
-                            alert("Event was saved!")
-                            setDataLoaded(false)
-                        } else {
-                            alert("We had some problem : /")
-                            setDataLoaded(false)
-                        }
-                    })
+                    if (data.status === 200) {
+                        addNewPhotoToEvent(formData, data?.data.insertId).then(photoData => {
+                            if (photoData.status === 200) {
+                                setPhotoName("")
+                                setPhotographer("")
+                                setExhibition("")
+                                setCountry("")
+                                setYear("")
+                                setStyle("")
+                                setPhoto("")
+                                alert("Event was saved!")
+                                setDataLoaded(false)
+                            } else {
+                                alert("We had some problem whit the photo : /")
+                                setDataLoaded(false)
+                            }
+                        })
+                    } else {
+                        alert("We had some problem whit the event : /")
+                        setDataLoaded(false)
+                    }
                 })
             } catch (err) {
                 console.log(err)
