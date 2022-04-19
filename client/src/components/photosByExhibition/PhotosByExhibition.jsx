@@ -4,7 +4,7 @@ import { getAllPhotosByExhibition } from '../../lib/api';
 import MainModal from '../modal/MainModal';
 import './PhotosByExhibition.css';
 
-function PhotosByExhibition() {
+function PhotosByExhibition({dataLoaded}) {
 
     const [displayModal, setDisplayModal] = useState(false)
     const [exhibition, setExhibition] = useState("")
@@ -38,7 +38,7 @@ function PhotosByExhibition() {
 
     return (
         <div className='btn-exhibition-wrapper'>
-            <Button onClick={getExhibitionPhotos}>
+            <Button disabled={dataLoaded} onClick={getExhibitionPhotos}>
                 Get Photos By Exhibition
             </Button>
             <MainModal

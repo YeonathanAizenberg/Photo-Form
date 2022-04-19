@@ -4,7 +4,7 @@ import CountrySelector from '../countrySelector/CountrySelector';
 import Input from '../input/Input';
 import './Form.css';
 
-function Form() {
+function Form({ setDataLoaded }) {
 
     const [photoName, setPhotoName] = useState("")
     const [photographer, setPhotographer] = useState("")
@@ -40,7 +40,7 @@ function Form() {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        if (photoName !== "" || photographer !== "" || exhibition !== "" || country !== "" || year !== "" || style !== "" || photo !== "") {
+        if (photoName !== "" && photographer !== "" && exhibition !== "" && country !== "" && year !== "" && style !== "" && photo !== "") {
             const formData = new FormData();
             formData.append('file', photo);
             const newEventData = {
@@ -52,23 +52,29 @@ function Form() {
                 style: style,
             }
             try {
+                setDataLoaded(true)
                 addNewEvent(newEventData).then(data => {
-                    addNewPhotoToEvent(formData, data?.data.insertId).then(data => {
-                        // setPhotoName("")
-                        // setPhotographer("")
-                        // setExhibition("")
-                        // setCountry("")
-                        // setYear("")
-                        // setStyle("")
-                        // setPhoto("")
-                        // alert("Event was saved!")
+                    addNewPhotoToEvent(formData, data?.data.insertId).then(photoData => {
+                        if (photoData.status === 200 && data.status === 200) {
+                            setPhotoName("")
+                            setPhotographer("")
+                            setExhibition("")
+                            setCountry("")
+                            setYear("")
+                            setStyle("")
+                            setPhoto("")
+                            alert("Event was saved!")
+                            setDataLoaded(false)
+                        } else {
+                            alert("We had some problem : /")
+                            setDataLoaded(false)
+                        }
                     })
                 })
             } catch (err) {
                 console.log(err)
                 alert(err)
             }
-
         } else {
             alert("Please fill in the fields!")
         }
@@ -112,7 +118,7 @@ function Form() {
                         setCountry={setCountry}
                     />
                 </div>
-                
+
 
                 <Input
                     label="Year"
