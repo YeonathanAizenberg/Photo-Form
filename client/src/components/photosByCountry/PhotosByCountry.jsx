@@ -5,7 +5,7 @@ import CountrySelector from '../countrySelector/CountrySelector';
 import MainModal from '../modal/MainModal';
 import './PhotosByCountry.css';
 
-function PhotosByCountry() {
+function PhotosByCountry({dataLoaded}) {
 
     const [displayModal, setDisplayModal] = useState(false)
     const [country, setCountry] = useState("")
@@ -39,7 +39,7 @@ function PhotosByCountry() {
 
     return (
         <div>
-            <Button onClick={getCountryPhotos}>
+            <Button disabled={dataLoaded} onClick={getCountryPhotos}>
                 Get Photos By Country
             </Button>
             <MainModal
