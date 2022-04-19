@@ -16,18 +16,39 @@ function photoEditing(req, res, next) {
     }
 
     function callEdit() {
+        // Read("Take") the file img and turn into grayscale
         Jimp.read('image/default.jpg')
             .then(photo => {
                 return photo
                     .resize(256, 256)
                     .greyscale()
-                    .write('grayDefault.jpg');
-            }).then(grayPhoto => {
-                Jimp.loadFont(Jimp.FONT_SANS_12_BLACK).then(font => {
-                    grayPhoto.print(font, 10, 10, timestampFormatted);
-                    grayPhoto.write("grayDefault.jpg", callNext)
-                });
+                    .write('./image/grayDefault.jpg');
             })
+
+        // Loop over the pixels, and if the value is >= 180, turn it white
+            .then(grayPhoto => {
+                    grayPhoto.scan(0, 0, grayPhoto.bitmap.width, grayPhoto.bitmap.height, function (x, y, idx) {
+                        var red = this.bitmap.data[idx + 0];
+                        var green = this.bitmap.data[idx + 1];
+                        var blue = this.bitmap.data[idx + 2];
+                        var alpha = this.bitmap.data[idx + 3];
+
+                        if ((red + green + blue + alpha) / 4 >= 180) {
+                            this.bitmap.data[idx] = 0
+                        }
+
+                    });
+                    return grayPhoto.write("./image/grayDefault.jpg")
+            })
+
+            // Add time stamp
+            .then(grayWhitePhoto => {
+                    Jimp.loadFont(Jimp.FONT_SANS_12_BLACK).then(font => {
+                        grayWhitePhoto.print(font, 10, 10, timestampFormatted);
+                        grayWhitePhoto.write("./image/grayDefault.jpg", callNext)
+                    });
+            })
+
             .catch(err => {
                 console.error(err);
             });
