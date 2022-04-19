@@ -52,6 +52,7 @@ function PhotosByCountry({dataLoaded}) {
 
             <div className='country-meta-data-selector'>
                 <CountrySelector
+                    disable={dataLoaded}
                     country={country}
                     setCountry={setCountry}
                 />

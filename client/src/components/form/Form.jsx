@@ -1,11 +1,11 @@
 import { useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { addNewEvent, addNewPhotoToEvent } from '../../lib/api';
 import CountrySelector from '../countrySelector/CountrySelector';
 import Input from '../input/Input';
 import './Form.css';
 
-function Form({ setDataLoaded }) {
-
+function Form({ dataLoaded, setDataLoaded }) {
     const [photoName, setPhotoName] = useState("")
     const [photographer, setPhotographer] = useState("")
     const [exhibition, setExhibition] = useState("")
@@ -114,6 +114,7 @@ function Form({ setDataLoaded }) {
                 <div className='country-selector'>
                     Country:
                     <CountrySelector
+                        disable={dataLoaded}
                         country={country}
                         setCountry={setCountry}
                     />
@@ -151,6 +152,7 @@ function Form({ setDataLoaded }) {
                     value="submit"
                 />
             </form>
+            {dataLoaded ? <div className='spinner-wrapper'><Spinner animation="grow" variant="primary" /></div> : null}
         </div>
     );
 }
