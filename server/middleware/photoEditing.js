@@ -33,8 +33,9 @@ function photoEditing(req, res, next) {
                         var blue = this.bitmap.data[idx + 2];
                         var alpha = this.bitmap.data[idx + 3];
 
-                        if ((red + green + blue + alpha) / 4 >= 180) {
-                            this.bitmap.data[idx] = 0
+                        if ((red + green + blue) / 3 >= 180) {
+                            // 255,255,255 = white on rgb
+                            this.bitmap.data[idx] = 255
                         }
 
                     });
