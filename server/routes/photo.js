@@ -9,9 +9,8 @@ router.post('/:id', photoEditing, (req, res) => {
     if(req.files === null) {
         return res.status(400)
     } else {
-        const pathToFile = `${__dirname}/../image/default.jpg`
         const file = req.files.file
-        const {name, data, size, encoding, tempFilePath, truncated, mimetype, md5, mv} = file
+        const {name, size, encoding, tempFilePath, truncated, mimetype, md5, mv} = file
         const grayImage = fs.readFileSync(`${__dirname}/../grayDefault.jpg`).toString('base64')
         let sql = `INSERT INTO photo_table (name, photo, size, encoding, tempFilePath, truncated, mimetype, md5, mv) VALUES ("${name}", "${grayImage}", "${size}", "${encoding}", "${tempFilePath}", "${truncated}", "${mimetype}", "${md5}", "${mv}")`;
         connection.query(sql, function (err, results) {
