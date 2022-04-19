@@ -6,38 +6,34 @@ function photoEditing(req, res, next) {
     const pathToFile = `${__dirname}/../image/default.jpg`
     const file = req.files.file
     const timestamp = new Date(Date.now())
-    const timestampFormatted = timestamp.getMonth()+"/"+timestamp.getDate()+" "+timestamp.getHours()+":"+timestamp.getMinutes()
+    const timestampFormatted = (timestamp.getMonth()+1)+"/"+timestamp.getDate()+" "+timestamp.getHours()+":"+timestamp.getMinutes()
 
     file.mv(pathToFile, err => {
         console.error(err)
     })
 
+    setTimeout(function() {
     Jimp.read('image/default.jpg')
         .then(photo => {
             return photo
+                .resize(256, 256) 
                 .quality(60) // set JPEG quality
                 .greyscale() // set greyscale
                 .write('grayDefault.jpg'); // save
-        })
-        .catch(err => {
-            console.error(err);
-        });
-
-        Jimp.read('image/default.jpg')
-        .then(photo => {
-            Jimp.loadFont(Jimp.FONT_SANS_32_BLACK).then(font => {
-                photo.print(font, 10, 10, timestampFormatted);
-                photo.write("grayDefault.jpg")
+        }).then(grayPhoto => {
+            Jimp.loadFont(Jimp.FONT_SANS_12_BLACK).then(font => {
+                grayPhoto.print(font, 10, 10, timestampFormatted);
+                grayPhoto.write("grayDefault.jpg")
             });
         })
         .catch(err => {
             console.error(err);
         });
+    }, 1000);
 
         setTimeout(function() {
             next();
-        }, 2000);
-    
+        }, 5000);
 }
 
 exports.photoEditing = photoEditing
