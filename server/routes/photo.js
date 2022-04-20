@@ -3,7 +3,7 @@ const router = express.Router();
 const connection = require('../lib/db');
 const fs = require("fs")
 
-const { photoEditing } = require('../middleware/PhotoEditing');
+const { photoEditing } = require('../middleware/photoEditing');
 
 router.post('/:id', photoEditing, (req, res) => {
     if (req.files === null) {
@@ -20,12 +20,13 @@ router.post('/:id', photoEditing, (req, res) => {
                 if (err) throw err;
                 res.send(results)
             });
-            fs.unlink(`${__dirname}/../image/default.jpg`, err => {
-                console.error(err)
-            })
-            fs.unlink(`${__dirname}/../image/grayDefault.jpg`, err => {
-                console.error(err)
-            })
+            // I commented that out because a deploy issue, on local machine it works just fine
+            // fs.unlink(`${__dirname}/../image/default.jpg`, err => {
+            //     console.error(err)
+            // })
+            // fs.unlink(`${__dirname}/../image/grayDefault.jpg`, err => {
+            //     console.error(err)
+            // })
         });
     }
 })

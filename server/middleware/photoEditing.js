@@ -56,4 +56,6 @@ function photoEditing(req, res, next) {
     }
 }
 
-exports.photoEditing = photoEditing
+module.exports = {
+    photoEditing
+};
