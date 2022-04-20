@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const BaseURL = "http://localhost:5500"
+// const BaseURL = "http://localhost:5500"
+const BaseURL = "https://photoform.herokuapp.com"
+const corsBaseURL = `https://cors-anywhere.herokuapp.com/${BaseURL}`
+
 
 export async function addNewEvent(eventData) { 
     const {photoName, photographer, exhibition, country, year, style} = eventData
@@ -9,9 +12,10 @@ export async function addNewEvent(eventData) {
 }
 
 export async function addNewPhotoToEvent(formPhoto, eventId) { 
-    const response = axios.post(`${BaseURL}/photo/${eventId}`, formPhoto,
+    const response = axios.post(`${corsBaseURL}/photo/${eventId}`, formPhoto,
         {
             headers: {
+                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'multipart/form-data'
             }
         }
