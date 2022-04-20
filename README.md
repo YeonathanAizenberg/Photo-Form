@@ -11,3 +11,6 @@ How to Run:
 - CD into server folder and run "npm i"
 - On your server folder, run "npm start"
 - Open a secund terminal, cd into the client folder and run "npm start"
+
+
+Deployed website: https://photo-form.netlify.app/
